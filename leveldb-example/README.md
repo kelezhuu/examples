@@ -24,3 +24,28 @@ ninja install
 
 MACOS：
 C / C++ 编译器使用 clang。
+
+## 调试
+
+如果需要调试 leveldb 的源码，cmakelists 需要改成这样。
+
+对应的静态链接 leveldb 这个库，这样编译时间会长点。
+
+```
+cmake_minimum_required(VERSION 3.20)
+project(learn_leveldb)
+
+set(CMAKE_CXX_STANDARD 17)
+find_package(Threads REQUIRED)
+
+# 添加 LevelDB 源码目录
+add_subdirectory(/Users/galiyu/project/leveldb leveldb_build)
+
+add_executable(leveldb-example main.cpp)
+
+target_link_libraries(leveldb-example
+        PRIVATE
+        leveldb
+        Threads::Threads
+)
+```
